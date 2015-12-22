@@ -1,4 +1,4 @@
-
+ï»¿
 #pragma once
 
 #include "macro_utils.hpp"
@@ -6,21 +6,21 @@
 namespace censor_reduction {
 	typedef std::vector<std::pair<float, cv::Mat> > BlendImagesType;
 
-	/** ®”’l‚ğˆµ‚¤GUIƒgƒ‰ƒbƒNƒo[ƒ‰ƒbƒp[
+	/** æ•´æ•°å€¤ã‚’æ‰±ã†GUIãƒˆãƒ©ãƒƒã‚¯ãƒãƒ¼ãƒ©ãƒƒãƒ‘ãƒ¼
 	*/
 	class CGuiTrackbarInteger
 	{
 	private:
 		int _iValue;
 		int _iMax;
-		//TODO Å¬’l‚Ìİ’è
+		//TODO æœ€å°å€¤ã®è¨­å®š
 
 	public:
-		/** ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+		/** ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		*/
 		CGuiTrackbarInteger(const std::string& trackbar_name, const std::string& window_name, int max);
 
-		/** ƒgƒ‰ƒbƒNƒo[‚Ì¦‚·’l‚ğ“¾‚é
+		/** ãƒˆãƒ©ãƒƒã‚¯ãƒãƒ¼ã®ç¤ºã™å€¤ã‚’å¾—ã‚‹
 		*/
 		int GetValue() const
 		{
@@ -28,7 +28,7 @@ namespace censor_reduction {
 		}
 	};
 
-	/** ®”’l‚ğˆµ‚¤GUIƒgƒ‰ƒbƒNƒo[ƒ‰ƒbƒp[
+	/** æ•´æ•°å€¤ã‚’æ‰±ã†GUIãƒˆãƒ©ãƒƒã‚¯ãƒãƒ¼ãƒ©ãƒƒãƒ‘ãƒ¼
 	*/
 	class CGuiTrackbarFloat
 	{
@@ -37,14 +37,14 @@ namespace censor_reduction {
 		int _iValue;
 		float _fMin;
 		float _fMax;
-		//TODO Å¬’l‚Ìİ’è
+		//TODO æœ€å°å€¤ã®è¨­å®š
 
 	public:
-		/** ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+		/** ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		*/
 		CGuiTrackbarFloat(const std::string& trackbar_name, const std::string& window_name, float min, float max);
 
-		/** ƒgƒ‰ƒbƒNƒo[‚Ì¦‚·’l‚ğ“¾‚é
+		/** ãƒˆãƒ©ãƒƒã‚¯ãƒãƒ¼ã®ç¤ºã™å€¤ã‚’å¾—ã‚‹
 		*/
 		float GetValue() const
 		{
@@ -52,7 +52,7 @@ namespace censor_reduction {
 		}
 	};
 
-	/** ‰æ‘œ‚Ì‹P“x’l(—v‘f)‚P‚Â‚ÌƒoƒCƒg”‚ğ“¾‚é
+	/** ç”»åƒã®è¼åº¦å€¤(è¦ç´ )ï¼‘ã¤ã®ãƒã‚¤ãƒˆæ•°ã‚’å¾—ã‚‹
 	*/
 	inline int GetImageElementByteSize(const cv::Mat& source)
 	{
@@ -86,7 +86,7 @@ namespace censor_reduction {
 		return 0;
 	}
 
-	/** dominator‚ÅŠ„‚èØ‚ê‚é‰æ‘œƒTƒCƒY‚Å‚ ‚ê‚Îtrue
+	/** dominatorã§å‰²ã‚Šåˆ‡ã‚Œã‚‹ç”»åƒã‚µã‚¤ã‚ºã§ã‚ã‚Œã°true
 	*/
 	inline bool IsDivisible(const cv::Size& resolution, int dominator)
 	{
@@ -94,14 +94,14 @@ namespace censor_reduction {
 		return resolution.width%dominator == 0 && resolution.height%dominator == 0;
 	}
 
-	/** dominator‚ÅŠ„‚èØ‚ê‚é‰æ‘œƒTƒCƒY‚Å‚ ‚ê‚Îtrue
+	/** dominatorã§å‰²ã‚Šåˆ‡ã‚Œã‚‹ç”»åƒã‚µã‚¤ã‚ºã§ã‚ã‚Œã°true
 	*/
 	inline bool IsDivisible(const cv::Mat& source, int dominator)
 	{
 		return IsDivisible(source.size(), dominator);
 	}
 
-	/** w’è‰æ‘œ‚Ìw’èÀ•WƒsƒNƒZƒ‹‚Ìƒ|ƒCƒ“ƒ^‚ğ“¾‚é
+	/** æŒ‡å®šç”»åƒã®æŒ‡å®šåº§æ¨™ãƒ”ã‚¯ã‚»ãƒ«ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å¾—ã‚‹
 	*/
 	template<typename T>
 	T* PixelAt(const cv::Mat& image, int u, int v)
@@ -114,28 +114,28 @@ namespace censor_reduction {
 		return reinterpret_cast<T*>(image.data + v*image.step + u*image.channels()*sizeof(T));
 	}
 
-	/** dominator‚ÅŠ„‚èØ‚ê‚éƒTƒCƒY‚É‚È‚é‚æ‚¤‚É‰æ‘œ‚ğƒgƒŠƒ~ƒ“ƒO‚·‚é
-	* @param [in] source	ˆ—‘ÎÛ‰æ‘œ
-	* @param [in] dominator	•ª•ê
-	* @return				ƒgƒŠƒ~ƒ“ƒOÏ‚İ‰æ‘œ
+	/** dominatorã§å‰²ã‚Šåˆ‡ã‚Œã‚‹ã‚µã‚¤ã‚ºã«ãªã‚‹ã‚ˆã†ã«ç”»åƒã‚’ãƒˆãƒªãƒŸãƒ³ã‚°ã™ã‚‹
+	* @param [in] source	å‡¦ç†å¯¾è±¡ç”»åƒ
+	* @param [in] dominator	åˆ†æ¯
+	* @return				ãƒˆãƒªãƒŸãƒ³ã‚°æ¸ˆã¿ç”»åƒ
 	*/
 	cv::Mat CreateTrimmedDivisibleImage(const cv::Mat& source, int dominator);
 
-	/** ‘S‘Ì‚Éƒ‚ƒUƒCƒN‚Ì‚©‚©‚Á‚½‰æ‘œ‚ğ¶¬‚·‚é
-	* @param [in] source		ˆ—‘ÎÛ‰æ‘œ
-	* @param [in] block_size	ƒ‚ƒUƒCƒN‚Ì1ƒuƒƒbƒN‚ÌƒTƒCƒY
-	* @return					ƒ‚ƒUƒCƒN‚Ì‚©‚©‚Á‚½‰æ‘œ
+	/** å…¨ä½“ã«ãƒ¢ã‚¶ã‚¤ã‚¯ã®ã‹ã‹ã£ãŸç”»åƒã‚’ç”Ÿæˆã™ã‚‹
+	* @param [in] source		å‡¦ç†å¯¾è±¡ç”»åƒ
+	* @param [in] block_size	ãƒ¢ã‚¶ã‚¤ã‚¯ã®1ãƒ–ãƒ­ãƒƒã‚¯ã®ã‚µã‚¤ã‚º
+	* @return					ãƒ¢ã‚¶ã‚¤ã‚¯ã®ã‹ã‹ã£ãŸç”»åƒ
 	*/
 	cv::Mat CreateCensoredImage(const cv::Mat& source, int block_size);
 
-	/** w’èƒuƒƒbƒNƒTƒCƒY‚Ìƒ`ƒFƒXƒ{[ƒhƒpƒ^[ƒ“‚ğ¶¬‚·‚é
+	/** æŒ‡å®šãƒ–ãƒ­ãƒƒã‚¯ã‚µã‚¤ã‚ºã®ãƒã‚§ã‚¹ãƒœãƒ¼ãƒ‰ãƒ‘ã‚¿ãƒ¼ãƒ³ã‚’ç”Ÿæˆã™ã‚‹
 	*/
 	cv::Mat CreateChessboradPatternImage(const cv::Size& resolution, int block_size);
 
-	/** w’èƒuƒŒƒ“ƒh—¦‚Å•¡”‚Ì‰æ‘œ‚ğƒuƒŒƒ“ƒh‚·‚é
-	* ‚·‚×‚Ä‚Ì‰æ‘œƒTƒCƒY‚ª‘µ‚Á‚Ä‚¢‚é•K—v‚ª‚ ‚é
-	* ‚·‚×‚Ä‚ÌƒuƒŒƒ“ƒh—¦‚Ì˜a‚ª1‚É‚È‚é‚æ‚¤‚É³‹K‰»‚³‚ê‚é
-	* “à•”ŒvZ‚ğfloat‚Ås‚¤‚½‚ß’á‘¬
+	/** æŒ‡å®šãƒ–ãƒ¬ãƒ³ãƒ‰ç‡ã§è¤‡æ•°ã®ç”»åƒã‚’ãƒ–ãƒ¬ãƒ³ãƒ‰ã™ã‚‹
+	* ã™ã¹ã¦ã®ç”»åƒã‚µã‚¤ã‚ºãŒæƒã£ã¦ã„ã‚‹å¿…è¦ãŒã‚ã‚‹
+	* ã™ã¹ã¦ã®ãƒ–ãƒ¬ãƒ³ãƒ‰ç‡ã®å’ŒãŒ1ã«ãªã‚‹ã‚ˆã†ã«æ­£è¦åŒ–ã•ã‚Œã‚‹
+	* å†…éƒ¨è¨ˆç®—ã‚’floatã§è¡Œã†ãŸã‚ä½é€Ÿ
 	*/
 	cv::Mat BlendImages(const BlendImagesType& images);
 };

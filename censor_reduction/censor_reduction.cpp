@@ -1,5 +1,5 @@
-
-#include "stdafx.h"
+﻿
+#include "stdafx.hpp"
 
 #include "censor_reduction.hpp"
 

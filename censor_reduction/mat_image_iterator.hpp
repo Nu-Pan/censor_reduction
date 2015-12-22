@@ -1,10 +1,10 @@
-
+ï»¿
 #pragma once
 
 #include "opencv_utils.hpp"
 
 namespace censor_reduction{
-	/** cv::Mat‰æ‘œƒCƒeƒŒ[ƒ^
+	/** cv::Matç”»åƒã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿
 	*/
 	template<typename T>
 	class CMatImageIterator
@@ -19,8 +19,8 @@ namespace censor_reduction{
 		int _v;
 
 	public:
-		/** ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-		* ‰Šú‰»qƒŠƒXƒg“à‚ÌˆË‘¶ŠÖŒW‚É’ˆÓ
+		/** ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+		* åˆæœŸåŒ–å­ãƒªã‚¹ãƒˆå†…ã®ä¾å­˜é–¢ä¿‚ã«æ³¨æ„
 		*/
 		explicit CMatImageIterator(const cv::Mat& image)
 			:_OriginalHolder(image)
@@ -37,9 +37,9 @@ namespace censor_reduction{
 			UTL_PRMCHK(0 < image.channels());
 		}
 
-		/** ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-		* ROI‚ÉŒÀ’è‚µ‚ÄƒCƒeƒŒ[ƒVƒ‡ƒ“‚ğs‚¤
-		* ‰Šú‰»qƒŠƒXƒg“à‚ÌˆË‘¶ŠÖŒW‚É’ˆÓ
+		/** ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+		* ROIã«é™å®šã—ã¦ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ã‚’è¡Œã†
+		* åˆæœŸåŒ–å­ãƒªã‚¹ãƒˆå†…ã®ä¾å­˜é–¢ä¿‚ã«æ³¨æ„
 		*/
 		CMatImageIterator(const cv::Mat& image, const cv::Rect& roi)
 			:_OriginalHolder(image)
@@ -56,19 +56,19 @@ namespace censor_reduction{
 			UTL_PRMCHK(0 < image.channels());
 		}
 
-		/** —LŒø‚ÈƒsƒNƒZƒ‹‚ğw‚µ‚Ä‚¢‚ê‚Îtrue‚ğ•Ô‹p
-		* ‰æ‘œI’[‚É’B‚µ‚Ä‚¢‚ê‚Îfalse‚ğ•Ô‹p
+		/** æœ‰åŠ¹ãªãƒ”ã‚¯ã‚»ãƒ«ã‚’æŒ‡ã—ã¦ã„ã‚Œã°trueã‚’è¿”å´
+		* ç”»åƒçµ‚ç«¯ã«é”ã—ã¦ã„ã‚Œã°falseã‚’è¿”å´
 		*/
 		operator bool() const
 		{
 			return _v != _ImageResolution.height;
 		}
 
-		/** Ÿ‚ÌƒsƒNƒZƒ‹‚Öi‚Ş
+		/** æ¬¡ã®ãƒ”ã‚¯ã‚»ãƒ«ã¸é€²ã‚€
 		*/
 		CMatImageIterator& operator ++()
 		{
-			//‚·‚Å‚ÉI’[‚É’B‚µ‚Ä‚¢‚é‚É‚à‚©‚©‚í‚ç‚¸æ‚Éi‚à‚¤‚Æ‚µ‚Ä‚¢‚È‚¢‚©ƒ`ƒFƒbƒN
+			//ã™ã§ã«çµ‚ç«¯ã«é”ã—ã¦ã„ã‚‹ã«ã‚‚ã‹ã‹ã‚ã‚‰ãšå…ˆã«é€²ã‚‚ã†ã¨ã—ã¦ã„ãªã„ã‹ãƒã‚§ãƒƒã‚¯
 			UTL_ASSERT( static_cast<bool>(*this) );
 			_pCurrent += _PixelByteSize;
 			++_u;
@@ -81,14 +81,14 @@ namespace censor_reduction{
 			return *this;
 		}
 
-		/** Œ»İw‚µ‚Ä‚¢‚éƒsƒNƒZƒ‹‚ğw‚·ƒ|ƒCƒ“ƒ^‚ğ“¾‚é
+		/** ç¾åœ¨æŒ‡ã—ã¦ã„ã‚‹ãƒ”ã‚¯ã‚»ãƒ«ã‚’æŒ‡ã™ãƒã‚¤ãƒ³ã‚¿ã‚’å¾—ã‚‹
 		*/
 		T* pPixel() const
 		{
 			return reinterpret_cast<T*>(_pCurrent);
 		}
 
-		/** Œ»İw‚µ‚Ä‚¢‚éƒsƒNƒZƒ‹‚ÌoffsetŒÂã‰º‚ÌƒsƒNƒZƒ‹‚ğw‚·ƒ|ƒCƒ“ƒ^‚ğ“¾‚é
+		/** ç¾åœ¨æŒ‡ã—ã¦ã„ã‚‹ãƒ”ã‚¯ã‚»ãƒ«ã®offsetå€‹ä¸Šä¸‹ã®ãƒ”ã‚¯ã‚»ãƒ«ã‚’æŒ‡ã™ãƒã‚¤ãƒ³ã‚¿ã‚’å¾—ã‚‹
 		*/
 		T* pPixelOffsetV(int offset) const
 		{
@@ -97,7 +97,7 @@ namespace censor_reduction{
 			return reinterpret_cast<T*>(_pCurrent + _OriginalHolder.step*offset);
 		}
 
-		/** Œ»İw‚µ‚Ä‚¢‚éƒsƒNƒZƒ‹‚ÌoffsetŒÂ¶‰E‚ÌƒsƒNƒZƒ‹‚ğw‚·ƒ|ƒCƒ“ƒ^‚ğ“¾‚é
+		/** ç¾åœ¨æŒ‡ã—ã¦ã„ã‚‹ãƒ”ã‚¯ã‚»ãƒ«ã®offsetå€‹å·¦å³ã®ãƒ”ã‚¯ã‚»ãƒ«ã‚’æŒ‡ã™ãƒã‚¤ãƒ³ã‚¿ã‚’å¾—ã‚‹
 		*/
 		T* pPixelOffsetU(int offset) const
 		{
@@ -106,21 +106,21 @@ namespace censor_reduction{
 			return reinterpret_cast<T*>(_pCurrent + _PixelByteSize*offset);
 		}
 
-		/** ƒ`ƒƒƒ“ƒlƒ‹”‚ğw’è‚µ‚ÄŒ»İw‚µ‚Ä‚¢‚éƒsƒNƒZƒ‹‚Ì‹P“x’l‚ÌQÆ‚ğ“¾‚é
+		/** ãƒãƒ£ãƒ³ãƒãƒ«æ•°ã‚’æŒ‡å®šã—ã¦ç¾åœ¨æŒ‡ã—ã¦ã„ã‚‹ãƒ”ã‚¯ã‚»ãƒ«ã®è¼åº¦å€¤ã®å‚ç…§ã‚’å¾—ã‚‹
 		*/
 		T& operator [](int ch) const
 		{
 			return reinterpret_cast<T*>(_pCurrent)[ch];
 		}
 
-		/** Œ»İ‚ÌUÀ•W‚ğ“¾‚é
+		/** ç¾åœ¨ã®Uåº§æ¨™ã‚’å¾—ã‚‹
 		*/
 		int u() const
 		{
 			return _u;
 		}
 
-		/** Œ»İ‚ÌVÀ•W‚ğ“¾‚é
+		/** ç¾åœ¨ã®Våº§æ¨™ã‚’å¾—ã‚‹
 		*/
 		int v() const
 		{

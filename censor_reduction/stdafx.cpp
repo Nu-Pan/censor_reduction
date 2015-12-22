@@ -1,12 +1,13 @@
-// stdafx.cpp : •W€ƒCƒ“ƒNƒ‹[ƒh censor_reduction.pch ‚Ì‚İ‚ğ
-// ŠÜ‚Şƒ\[ƒX ƒtƒ@ƒCƒ‹‚ÍAƒvƒŠƒRƒ“ƒpƒCƒ‹Ï‚İƒwƒbƒ_[‚É‚È‚è‚Ü‚·B
-// stdafx.obj ‚É‚ÍƒvƒŠƒRƒ“ƒpƒCƒ‹Ï‚İŒ^î•ñ‚ªŠÜ‚Ü‚ê‚Ü‚·B
+ï»¿// stdafx.cpp : æ¨™æº–ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ censor_reduction.pch ã®ã¿ã‚’
+// å«ã‚€ã‚½ãƒ¼ã‚¹ ãƒ•ã‚¡ã‚¤ãƒ«ã¯ã€ãƒ—ãƒªã‚³ãƒ³ãƒ‘ã‚¤ãƒ«æ¸ˆã¿ãƒ˜ãƒƒãƒ€ãƒ¼ã«ãªã‚Šã¾ã™ã€‚
+// stdafx.obj ã«ã¯ãƒ—ãƒªã‚³ãƒ³ãƒ‘ã‚¤ãƒ«æ¸ˆã¿å‹æƒ…å ±ãŒå«ã¾ã‚Œã¾ã™ã€‚
 
-#include "stdafx.h"
+#include "stdafx.hpp"
 
-// TODO: ‚±‚Ìƒtƒ@ƒCƒ‹‚Å‚Í‚È‚­ASTDAFX.H ‚Å•K—v‚È
-// ’Ç‰Áƒwƒbƒ_[‚ğQÆ‚µ‚Ä‚­‚¾‚³‚¢B
+// TODO: ã“ã®ãƒ•ã‚¡ã‚¤ãƒ«ã§ã¯ãªãã€STDAFX.H ã§å¿…è¦ãª
+// è¿½åŠ ãƒ˜ãƒƒãƒ€ãƒ¼ã‚’å‚ç…§ã—ã¦ãã ã•ã„ã€‚
 
+#ifdef _MSC_VER_
 #if _DEBUG
 #pragma comment(lib, "opencv_calib3d2411d.lib")
 #pragma comment(lib, "opencv_contrib2411d.lib")
@@ -47,4 +48,5 @@
 #pragma comment(lib, "opencv_ts2411.lib")
 #pragma comment(lib, "opencv_video2411.lib")
 #pragma comment(lib, "opencv_videostab2411.lib")
+#endif
 #endif

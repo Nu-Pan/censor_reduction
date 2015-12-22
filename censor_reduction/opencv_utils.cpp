@@ -1,5 +1,5 @@
-
-#include "stdafx.h"
+ï»¿
+#include "stdafx.hpp"
 
 #include "opencv_utils.hpp"
 
@@ -12,7 +12,7 @@ using namespace cv;
 
 //-------------------------------- CGuiTrackbarInteger --------------------------------
 
-/** ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+/** ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 */
 censor_reduction::CGuiTrackbarInteger::CGuiTrackbarInteger(const std::string& trackbar_name, const std::string& window_name, int max)
 :_iValue(0)
@@ -23,9 +23,9 @@ censor_reduction::CGuiTrackbarInteger::CGuiTrackbarInteger(const std::string& tr
 
 //-------------------------------- CGuiTrackbarFloat --------------------------------
 
-const int censor_reduction::CGuiTrackbarFloat::_iMax = 1000000;
+const int censor_reduction::CGuiTrackbarFloat::_iMax = 1000;
 
-/** ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+/** ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 */
 censor_reduction::CGuiTrackbarFloat::CGuiTrackbarFloat(const std::string& trackbar_name, const std::string& window_name, float min, float max)
 :_iValue(0)
@@ -39,7 +39,7 @@ censor_reduction::CGuiTrackbarFloat::CGuiTrackbarFloat(const std::string& trackb
 
 cv::Mat censor_reduction::CreateTrimmedDivisibleImage(const cv::Mat& source, int dominator)
 {
-	//ƒgƒŠƒ€ƒTƒCƒY‚ğŒˆ’è
+	//ãƒˆãƒªãƒ ã‚µã‚¤ã‚ºã‚’æ±ºå®š
 	const int OverWidth = source.size().width%dominator;
 	const int OverHeight = source.size().height%dominator;
 	const int TrimWidth = source.size().width - OverWidth;
@@ -49,13 +49,13 @@ cv::Mat censor_reduction::CreateTrimmedDivisibleImage(const cv::Mat& source, int
 	UTL_PRMCHK(0 < TrimWidth);
 	UTL_PRMCHK(0 < TrimHeight);
 
-	//ƒgƒŠƒ€•s—v‚È‚ç‚»‚Ì‚Ü‚Ü‰æ‘œ‚ğ•Ô‚·
+	//ãƒˆãƒªãƒ ä¸è¦ãªã‚‰ãã®ã¾ã¾ç”»åƒã‚’è¿”ã™
 	if (TrimSize == source.size())
 	{
 		return source;
 	}
 
-	//ROI‚ÅƒgƒŠƒ€‚µ‚ÄƒNƒ[ƒ“
+	//ROIã§ãƒˆãƒªãƒ ã—ã¦ã‚¯ãƒ­ãƒ¼ãƒ³
 	return cv::Mat(source, cv::Rect(OverWidth / 2, OverHeight / 2, TrimWidth, TrimHeight)).clone();
 }
 
@@ -70,7 +70,7 @@ cv::Mat censor_reduction::CreateCensoredImage(const cv::Mat& source, int block_s
 	const int PixelByteSize = NoC*sizeof(uint8_t);
 	const int LineByteSizeInBlock = PixelByteSize*block_size;
 
-	//ƒƒCƒ“ˆ—
+	//ãƒ¡ã‚¤ãƒ³å‡¦ç†
 	Mat Censored(source.size(), source.type());
 	vector<uint32_t> Buffer32(NoC);
 	vector<uint8_t> Buffer8;
@@ -78,10 +78,10 @@ cv::Mat censor_reduction::CreateCensoredImage(const cv::Mat& source, int block_s
 	Rect Roi;
 	Roi.width = block_size;
 	Roi.height = block_size;
-	//‚·‚×‚Ä‚ÌƒuƒƒbƒN‚É‚Â‚¢‚Äƒ‹[ƒv
+	//ã™ã¹ã¦ã®ãƒ–ãƒ­ãƒƒã‚¯ã«ã¤ã„ã¦ãƒ«ãƒ¼ãƒ—
 	for (Roi.y = 0; Roi.y < Res.height; Roi.y += block_size) {
 		for (Roi.x = 0; Roi.x < Res.width; Roi.x += block_size) {
-			//ƒuƒƒbƒN“à‚Ì‹P“x’l‚Ì•½‹Ï‚ğ‹‚ß‚é
+			//ãƒ–ãƒ­ãƒƒã‚¯å†…ã®è¼åº¦å€¤ã®å¹³å‡ã‚’æ±‚ã‚ã‚‹
 			for (vector<unsigned>::iterator i = Buffer32.begin(); i != Buffer32.end(); ++i)
 			{
 				*i = 0;
@@ -98,12 +98,12 @@ cv::Mat censor_reduction::CreateCensoredImage(const cv::Mat& source, int block_s
 			{
 				Buffer8.push_back(*i / BlockArea);
 			}
-			//‘‚«‚İæƒuƒƒbƒN‚Ì1s–Ú‚ğmemcpy‚Å•½‹ÏF“h‚è‚Â‚Ô‚µ
+			//æ›¸ãè¾¼ã¿å…ˆãƒ–ãƒ­ãƒƒã‚¯ã®1è¡Œç›®ã‚’memcpyã§å¹³å‡è‰²å¡—ã‚Šã¤ã¶ã—
 			for (CMatImageIterator<uint8_t> i(Censored, Rect(Roi.x, Roi.y, block_size, 1)); i; ++i)
 			{
 				memcpy(i.pPixel(), Buffer8.data(), PixelByteSize);
 			}
-			//‘‚«‚İæƒuƒƒbƒN‚Ì2s–ÚˆÈ~‚ğmemcpy‚Å•½‹ÏF“h‚è‚Â‚Ô‚µ
+			//æ›¸ãè¾¼ã¿å…ˆãƒ–ãƒ­ãƒƒã‚¯ã®2è¡Œç›®ä»¥é™ã‚’memcpyã§å¹³å‡è‰²å¡—ã‚Šã¤ã¶ã—
 			for (CMatImageIterator<uint8_t> i(Censored, Rect(Roi.x, Roi.y + 1, 1, block_size - 1)); i; ++i)
 			{
 				memcpy(i.pPixel(), i.pPixelOffsetV(-1), LineByteSizeInBlock);
@@ -133,21 +133,21 @@ cv::Mat censor_reduction::CreateChessboradPatternImage(const cv::Size& resolutio
 
 	uint8_t Scaler;
 
-	//c‰ğ‘œ“x1‚ÌƒVƒ}ƒVƒ}‘Ñ‚ğ2‚Âì‚é(Œİ‚¢‚É”½“]ƒpƒ^[ƒ“)
+	//ç¸¦è§£åƒåº¦1ã®ã‚·ãƒã‚·ãƒå¸¯ã‚’2ã¤ä½œã‚‹(äº’ã„ã«åè»¢ãƒ‘ã‚¿ãƒ¼ãƒ³)
 	vector<uint8_t> SlitPN(NoEInLine);
 	Scaler = 0x00;
 	for (vector<uint8_t>::iterator i=SlitPN.begin(); i != SlitPN.end(); i += NoEInBlock) {
 		Scaler = ~Scaler;
-		memset(i._Ptr, Scaler, LineByteSizeInBlock);
+		memset(&*i, Scaler, LineByteSizeInBlock);
 	}
 	vector<uint8_t> SlitNP(NoEInLine);
 	Scaler = 0xFF;
 	for (vector<uint8_t>::iterator i = SlitNP.begin(); i != SlitNP.end(); i += NoEInBlock) {
 		Scaler = ~Scaler;
-		memset(i._Ptr, Scaler, LineByteSizeInBlock);
+		memset(&*i, Scaler, LineByteSizeInBlock);
 	}
 
-	//‘Ñ‚ğƒRƒs[‚µ‚Äƒ`ƒFƒXƒ{[ƒhƒpƒ^[ƒ“‚ğ¶¬
+	//å¸¯ã‚’ã‚³ãƒ”ãƒ¼ã—ã¦ãƒã‚§ã‚¹ãƒœãƒ¼ãƒ‰ãƒ‘ã‚¿ãƒ¼ãƒ³ã‚’ç”Ÿæˆ
 	cv::Mat Left(resolution, CV_8UC3);
 	for (CMatImageIterator<uint8_t> i(Left, Rect(0, 0, 1, Height)); i; ++i)
 	{
@@ -166,7 +166,7 @@ cv::Mat censor_reduction::CreateChessboradPatternImage(const cv::Size& resolutio
 
 cv::Mat censor_reduction::BlendImages(const BlendImagesType& images)
 {
-	//‚·‚×‚Ä‚Ì‰æ‘œ‚ÌƒtƒH[ƒ}ƒbƒg‚ª“¯ˆê‚©, •s³‚ÈƒtƒH[ƒ}ƒbƒg‚Å‚È‚¢‚©, ‚Ìƒ`ƒFƒbƒN
+	//ã™ã¹ã¦ã®ç”»åƒã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆãŒåŒä¸€ã‹, ä¸æ­£ãªãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã§ãªã„ã‹, ã®ãƒã‚§ãƒƒã‚¯
 	const Size ImageSize = images.front().second.size();
 	const int ImageChannels = images.front().second.channels();
 	{
@@ -178,10 +178,10 @@ cv::Mat censor_reduction::BlendImages(const BlendImagesType& images)
 		}
 	}
 
-	//ì‹Æ—p‚ÉƒRƒs[‚ğæ‚é
+	//ä½œæ¥­ç”¨ã«ã‚³ãƒ”ãƒ¼ã‚’å–ã‚‹
 	BlendImagesType Images = images;
 
-	//ƒuƒŒƒ“ƒh—¦‚ğ³‹K‰»
+	//ãƒ–ãƒ¬ãƒ³ãƒ‰ç‡ã‚’æ­£è¦åŒ–
 	{
 		float SumOfRate = 0.f;
 		for (BlendImagesType::iterator i = Images.begin(); i != Images.end(); ++i)
@@ -194,7 +194,7 @@ cv::Mat censor_reduction::BlendImages(const BlendImagesType& images)
 		}
 	}
 
-	//ƒuƒŒƒ“ƒfƒBƒ“ƒO‚ğs‚¤
+	//ãƒ–ãƒ¬ãƒ³ãƒ‡ã‚£ãƒ³ã‚°ã‚’è¡Œã†
 	Mat Buffer = Mat::zeros(ImageSize, CV_32FC3);
 	for (BlendImagesType::iterator i = Images.begin(); i != Images.end(); ++i)
 	{
@@ -217,7 +217,7 @@ cv::Mat censor_reduction::BlendImages(const BlendImagesType& images)
 		}
 	}
 
-	//ƒuƒŒƒ“ƒfƒBƒ“ƒOŒ‹‰Ê‚ğBGR24‚É–O˜a‰‰Z‚ÅƒpƒbƒN
+	//ãƒ–ãƒ¬ãƒ³ãƒ‡ã‚£ãƒ³ã‚°çµæœã‚’BGR24ã«é£½å’Œæ¼”ç®—ã§ãƒ‘ãƒƒã‚¯
 	Mat Left(ImageSize, CV_8UC3);
 	CMatImageIterator<float> SrcIter(Buffer);
 	CMatImageIterator<uint8_t> DstIter(Left);

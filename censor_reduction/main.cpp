@@ -1,5 +1,5 @@
-
-#include "stdafx.h"
+ï»¿
+#include "stdafx.hpp"
 
 #include "macro_utils.hpp"
 #include "opencv_utils.hpp"
@@ -12,28 +12,29 @@ using namespace censor_reduction;
 
 int main(int argc, char* argv[])
 {
-	//’è”
+	//å®šæ•°
 	const string AppricationName = "Censor Reduction Tool";
 	const int MaxCensorBlockSize = 32;
 
-	//“ü—Í‰æ‘œ‚ğ—pˆÓ.ƒfƒoƒbƒO—p.
-	Mat Source = imread("images\\b6fcd15cb7e9b6c0b47c37c4efb58efa.png", 1);
+	//å…¥åŠ›ç”»åƒã‚’ç”¨æ„.ãƒ‡ãƒãƒƒã‚°ç”¨.
+	//Mat Source = imread("images\\b6fcd15cb7e9b6c0b47c37c4efb58efa.png", 1);
 	//Mat Source = imread("images\\b23d1be367600da8c5ccc7339fa27213.jpg", 1);
 	//Mat Source = imread("images\\sauage_fattner_censored_x8.png", 1);
 	//Mat Source = imread("images\\papi_colored_censored_x16.png", 1);
+	Mat Source = imread("20151221230507.png", 1);
 
-	//ƒIƒŠƒWƒiƒ‹‰æ‘œ‚ğ—\‚ßƒgƒŠƒ€
+	//ã‚ªãƒªã‚¸ãƒŠãƒ«ç”»åƒã‚’äºˆã‚ãƒˆãƒªãƒ 
 	Mat Trimmed = CreateTrimmedDivisibleImage(Source, MaxCensorBlockSize);
 
-	//XXX Á‚¦‚é‚Í‚¸ : GUI‚Å§Œä‚·‚éƒpƒ‰ƒ[ƒ^—Ş
+	//XXX æ¶ˆãˆã‚‹ã¯ãš : GUIã§åˆ¶å¾¡ã™ã‚‹ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿é¡
 	int iCensorBlockSize = 1;
 	int iChessboardBlockSize = 1;
 
-	//ƒvƒŒƒrƒ…[ƒEƒBƒ“ƒhƒE‚Ì—pˆÓ
+	//ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ç”¨æ„
 	const string MainWindowName = AppricationName + " / Preview";
 	namedWindow(MainWindowName, CV_WINDOW_NORMAL);
 
-	//ƒRƒ“ƒgƒ[ƒ‹ƒEƒBƒ“ƒhƒE‚Ì—pˆÓ
+	//ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ç”¨æ„
 	const string ControllWindowName = AppricationName + " / Controll";
 	namedWindow(ControllWindowName, CV_WINDOW_NORMAL);
 	CGuiTrackbarFloat tbSourceBlendRate("source_blend_rate", ControllWindowName, 0.f, 1.f);
@@ -43,18 +44,18 @@ int main(int argc, char* argv[])
 	CGuiTrackbarInteger tbChessboardBlockSize("chessboard_block_size", ControllWindowName, MaxCensorBlockSize);
 	CGuiTrackbarFloat tbBlurSigma("blur_sigma", ControllWindowName, 0.01f, 10.f);
 
-	//XXX ƒfƒoƒbƒO—p
+	//XXX ãƒ‡ãƒãƒƒã‚°ç”¨
 	Mat Blured;
 
 	for (;;) {
-		//ƒL[“ü—Íˆ—
+		//ã‚­ãƒ¼å…¥åŠ›å‡¦ç†
 		const int KeyCode = waitKey(33);
 		if (KeyCode == 27)
 		{
 			break;
 		}
 
-		//XXX ƒgƒ‰ƒbƒNƒo[ƒ‰ƒbƒp[‚Å‚È‚ñ‚Æ‚©‚·‚é‚×‚« : ƒRƒ“ƒgƒ[ƒ‹‚©‚çƒpƒ‰ƒ[ƒ^‚Ìæ“¾‚Æƒ`ƒFƒbƒN
+		//XXX ãƒˆãƒ©ãƒƒã‚¯ãƒãƒ¼ãƒ©ãƒƒãƒ‘ãƒ¼ã§ãªã‚“ã¨ã‹ã™ã‚‹ã¹ã : ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã‹ã‚‰ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®å–å¾—ã¨ãƒã‚§ãƒƒã‚¯
 		if (tbCensorBlockSize.GetValue() != 0)
 		{
 			if (IsDivisible(Trimmed.size(), tbCensorBlockSize.GetValue()))
@@ -78,7 +79,7 @@ int main(int argc, char* argv[])
 			iChessboardBlockSize = 1;
 		}
 
-		//‰æ‘œˆ—‚ÌÀs
+		//ç”»åƒå‡¦ç†ã®å®Ÿè¡Œ
 		Mat Censored = CreateCensoredImage(Trimmed, iCensorBlockSize);
 		Mat ChessBoard = CreateChessboradPatternImage(Trimmed.size(), iChessboardBlockSize);
 		BlendImagesType Blends;
@@ -88,7 +89,7 @@ int main(int argc, char* argv[])
 		Mat Blended = BlendImages(Blends);
 		cv::GaussianBlur(Blended, Blured, Size(5, 5), tbBlurSigma.GetValue(), tbBlurSigma.GetValue(), BORDER_DEFAULT);
 
-		//Œ‹‰Ê‚ğ•`‰æ
+		//çµæœã‚’æç”»
 		imshow(MainWindowName, Blured);
 	}
 	
