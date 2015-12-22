@@ -66,7 +66,7 @@ GCC_DBG_OPT		:= -ggdb3
 CUDA_ARCH	:= -arch=sm_30
 
 # C++コンパイル情報
-CXX					:= $(GCC_VERSION) -MP -MMD -pipe -march=native -std=c++11
+CXX					:= $(GCC_VERSION) -MP -MMD -pipe -march=native -std=c++1y
 CXX_DEBUG_FLAGS		:= -Wall -W -O0 $(GCC_DBG_OPT) -DDEBUG
 CXX_RELEASE_FLAGS	:= $(GCC_REL_OPT) -DNDEBUG
 CXX_PROF_FLAGS		:= $(CXX_RELEASE_FLAGS) $(GCC_DBG_OPT) -fno-inline -DGOOGLE_PROFILE

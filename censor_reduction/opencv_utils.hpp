@@ -4,6 +4,18 @@
 #include "macro_utils.hpp"
 
 namespace censor_reduction {
+	namespace impl{
+		/** トラックバー内部実装クラス
+		 */
+		struct CGuiTrackerImpl
+		{
+			int iValue;
+			int iMax;
+
+			CGuiTrackerImpl(const std::string& trackbar_name, const std::string& window_name, int max);
+		};
+	};
+
 	typedef std::vector<std::pair<float, cv::Mat> > BlendImagesType;
 
 	/** 整数値を扱うGUIトラックバーラッパー
@@ -11,11 +23,14 @@ namespace censor_reduction {
 	class CGuiTrackbarInteger
 	{
 	private:
-		int _iValue;
-		int _iMax;
-		//TODO 最小値の設定
+		std::shared_ptr<impl::CGuiTrackerImpl> _pImpl;
 
 	public:
+		/** デフォルトコンストラクタ
+		 * トラックバーを生成しない
+		 */
+		CGuiTrackbarInteger();
+
 		/** コンストラクタ
 		*/
 		CGuiTrackbarInteger(const std::string& trackbar_name, const std::string& window_name, int max);
@@ -24,7 +39,7 @@ namespace censor_reduction {
 		*/
 		int GetValue() const
 		{
-			return _iValue;
+			return _pImpl->iValue;
 		}
 	};
 
@@ -34,12 +49,18 @@ namespace censor_reduction {
 	{
 	private:
 		static const int _iMax;
-		int _iValue;
+
+		std::shared_ptr<impl::CGuiTrackerImpl> _pImpl;
+
 		float _fMin;
 		float _fMax;
-		//TODO 最小値の設定
 
 	public:
+		/** デフォルトコンストラクタ
+		 * トラックバーを生成しない
+		 */
+		CGuiTrackbarFloat();
+
 		/** コンストラクタ
 		*/
 		CGuiTrackbarFloat(const std::string& trackbar_name, const std::string& window_name, float min, float max);
@@ -48,7 +69,7 @@ namespace censor_reduction {
 		*/
 		float GetValue() const
 		{
-			return _fMin+static_cast<float>(_iValue)*(_fMax-_fMin)/static_cast<int>(_iMax);
+			return _fMin+static_cast<float>(_pImpl->iValue)*(_fMax-_fMin)/static_cast<float>(_iMax);
 		}
 	};
 

@@ -9,30 +9,54 @@
 
 using namespace std;
 using namespace cv;
+//-------------------------------- CGuiTrackbarImpl --------------------------------
+
+
+censor_reduction::impl::CGuiTrackerImpl::CGuiTrackerImpl(const std::string& trackbar_name, const std::string& window_name, int max)
+:iValue()
+,iMax(max)
+{
+	cv::createTrackbar(trackbar_name.c_str(), window_name.c_str(), &iValue, iMax);
+}
 
 //-------------------------------- CGuiTrackbarInteger --------------------------------
+
+/** デフォルトコンストラクタ
+ * トラックバーを生成しない
+ */
+censor_reduction::CGuiTrackbarInteger::CGuiTrackbarInteger()
+:_pImpl()
+{
+}
 
 /** コンストラクタ
 */
 censor_reduction::CGuiTrackbarInteger::CGuiTrackbarInteger(const std::string& trackbar_name, const std::string& window_name, int max)
-:_iValue(0)
-,_iMax(max)
+:_pImpl(new impl::CGuiTrackerImpl(trackbar_name, window_name, max))
 {
-	cv::createTrackbar(trackbar_name.c_str(), window_name.c_str(), &_iValue, _iMax);
 }
 
 //-------------------------------- CGuiTrackbarFloat --------------------------------
 
 const int censor_reduction::CGuiTrackbarFloat::_iMax = 1000;
 
+/** デフォルトコンストラクタ
+ * トラックバーを生成しない
+ */
+censor_reduction::CGuiTrackbarFloat::CGuiTrackbarFloat()
+:_pImpl()
+,_fMin(0.f)
+,_fMax(0.f)
+{
+}
+
 /** コンストラクタ
 */
 censor_reduction::CGuiTrackbarFloat::CGuiTrackbarFloat(const std::string& trackbar_name, const std::string& window_name, float min, float max)
-:_iValue(0)
+:_pImpl(new impl::CGuiTrackerImpl(trackbar_name, window_name, _iMax))
 ,_fMin(min)
 ,_fMax(max)
 {
-	cv::createTrackbar(trackbar_name.c_str(), window_name.c_str(), &_iValue, _iMax);
 }
 
 //-------------------------------- public functions --------------------------------
@@ -104,9 +128,13 @@ cv::Mat censor_reduction::CreateCensoredImage(const cv::Mat& source, int block_s
 				memcpy(i.pPixel(), Buffer8.data(), PixelByteSize);
 			}
 			//書き込み先ブロックの2行目以降をmemcpyで平均色塗りつぶし
-			for (CMatImageIterator<uint8_t> i(Censored, Rect(Roi.x, Roi.y + 1, 1, block_size - 1)); i; ++i)
 			{
-				memcpy(i.pPixel(), i.pPixelOffsetV(-1), LineByteSizeInBlock);
+				CMatImageIterator<uint8_t> i(Censored, Rect(Roi.x, Roi.y, 1, block_size));
+				++i;
+				for (; i; ++i)
+				{
+					memcpy(i.pPixel(), i.pPixelOffsetV(-1), LineByteSizeInBlock);
+				}
 			}
 		}
 	}
