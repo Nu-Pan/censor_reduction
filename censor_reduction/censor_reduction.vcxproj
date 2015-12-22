@@ -104,6 +104,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile>stdafx.hpp</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -136,6 +137,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile>stdafx.hpp</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -150,13 +152,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="censor_reduction.hpp" />
+    <ClInclude Include="interactive_gui.hpp" />
     <ClInclude Include="macro_utils.hpp" />
     <ClInclude Include="mat_image_iterator.hpp" />
     <ClInclude Include="opencv_utils.hpp" />
-    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="stdafx.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="censor_reduction.cpp" />
+    <ClCompile Include="interactive_gui.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="opencv_utils.cpp" />
     <ClCompile Include="stdafx.cpp">

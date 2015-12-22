@@ -7,7 +7,7 @@
 // TODO: このファイルではなく、STDAFX.H で必要な
 // 追加ヘッダーを参照してください。
 
-#ifdef _MSC_VER_
+#ifdef _MSC_VER
 #if _DEBUG
 #pragma comment(lib, "opencv_calib3d2411d.lib")
 #pragma comment(lib, "opencv_contrib2411d.lib")
